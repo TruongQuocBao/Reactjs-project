@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import PropTypes from 'prop-types';
+import Header from './components/Header';
+import ProductFeature from 'features/Product';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import Footer from 'components/footer';
+import Cartfeature from 'features/Cart';
+import Notfound from 'components/Notfound';
 
-function App() {
+App.propTypes = {};
+
+function App(props) {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Switch>
+        <Redirect from="/products" to="/" exact />
+
+        <Route path="/cart" component={Cartfeature} exact></Route>
+        <Route path="/" component={ProductFeature}></Route>
+
+        <Route component={Notfound}></Route>
+      </Switch>
+      {/* <ProductFeature /> */}
+      <Footer />
     </div>
   );
 }

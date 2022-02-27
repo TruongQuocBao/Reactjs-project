@@ -1,0 +1,22 @@
+.list {
+  list-style-type: none;
+  & > li:hover {
+    cursor: pointer;
+    color: darkblue;
+  }
+}
+
+.socialList {
+  list-style-type: none;
+
+  & > li {
+    display: flex;
+  }
+  & > li:hover {
+    cursor: pointer;
+  }
+
+  & > li > div {
+    margin-right: 5px;
+  }
+}
