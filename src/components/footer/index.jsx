@@ -16,7 +16,7 @@ const footerlist1 = [
   },
   {
     id: 2,
-    title: 'email hỗ trợ: hotro@eshop.vn',
+    title: 'email hỗ trợ: hotro@orishop.vn',
   },
   {
     id: 3,
@@ -55,7 +55,7 @@ function Footer(props) {
 
           <Grid item>
             <ul className="list">
-              <Typography variant="h6">Về E-Shop</Typography>
+              <Typography variant="h6">Về Ori-Shop</Typography>
               {footerList2.map((item) => (
                 <li key={item.id}>{item.title}</li>
               ))}

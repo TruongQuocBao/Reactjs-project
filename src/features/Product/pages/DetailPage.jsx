@@ -1,9 +1,17 @@
-import { Box, Container, Grid, LinearProgress, makeStyles, Paper } from '@material-ui/core';
+import {
+  Box,
+  Container,
+  Grid,
+  IconButton,
+  LinearProgress,
+  makeStyles,
+  Paper,
+} from '@material-ui/core';
 import { addToCart } from 'features/Cart/cartSlice';
 import { useSnackbar } from 'notistack';
 
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import AddToCartForm from '../components/AddToCardForm';
@@ -15,6 +23,13 @@ import ProductMenu from '../components/ProductMenu';
 import ProductReviews from '../components/ProductReviews';
 import ProductThumbnail from '../components/ProductThumbnail';
 import useProductDetail from '../hooks/useProductDetail';
+
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import { AccountCircle, Close } from '@material-ui/icons';
+import Register from 'features/Auth/components/Register';
+import Login from 'features/Auth/components/Login';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
 }));
+const MODE = {
+  REGISTER: 'register',
+  LOGIN: 'login',
+};
 
 function DetailPage() {
   const classes = useStyles();
@@ -52,6 +71,18 @@ function DetailPage() {
 
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const loggedInUser = useSelector((state) => state.user.current);
+  const isLoggedIn = !!loggedInUser.id;
+  const [mode, setMode] = useState(MODE.LOGIN);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   if (loading) {
     return (
@@ -83,7 +114,44 @@ function DetailPage() {
             <Grid item className={classes.right}>
               <ProductInfo product={product} />
 
-              <AddToCartForm onSubmit={handleAddToCartSubmit} />
+              <AddToCartForm onSubmit={isLoggedIn ? handleAddToCartSubmit : handleClickOpen} />
+              <Dialog
+                disableBackdropClick
+                disableEscapeKeyDown
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="form-dialog-title"
+              >
+                <IconButton>
+                  <Close className={classes.closeBtn} onClick={handleClose}></Close>
+                </IconButton>
+
+                <DialogContent>
+                  {mode === MODE.REGISTER && (
+                    <>
+                      <Register closeDialog={handleClose}></Register>
+
+                      <Box textAlign="center">
+                        <Button color="primary" onClick={() => setMode(MODE.LOGIN)}>
+                          Bạn đã có tài khoản ? Đăng nhập tại đây
+                        </Button>
+                      </Box>
+                    </>
+                  )}
+
+                  {mode === MODE.LOGIN && (
+                    <>
+                      <Login closeDialog={handleClose}></Login>
+
+                      <Box textAlign="center">
+                        <Button color="primary" onClick={() => setMode(MODE.REGISTER)}>
+                          Bạn chưa có tài khoản ? Đăng ký tại đây
+                        </Button>
+                      </Box>
+                    </>
+                  )}
+                </DialogContent>
+              </Dialog>
             </Grid>
           </Grid>
         </Paper>
