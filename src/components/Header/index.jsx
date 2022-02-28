@@ -14,7 +14,9 @@ import { logout } from 'features/Auth/userSlice';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
+
 import logo from 'asset/images/commerceimage.png';
+
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { cartItemsCountSelector } from 'features/Cart/selectors';
 import { useHistory } from 'react-router-dom';
@@ -89,10 +91,10 @@ export default function Header() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <img src={logo} style={{ margin: '8px' }} height="30px" />
+          <img src={logo} style={{ margin: '8px' }} height="40px" />
           <Typography variant="h6" className={classes.title}>
             <Link className={classes.link} to="/">
-              E-Shop
+              Ori-shop
             </Link>
           </Typography>
 
