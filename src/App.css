@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,17 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+.App {
+  max-width: 1600px;
+
+  margin: 0 auto;
 }

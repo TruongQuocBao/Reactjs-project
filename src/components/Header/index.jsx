@@ -1,25 +1,24 @@
-import { Badge, Box, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { Badge, Box, IconButton, Menu, MenuItem, useMediaQuery } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { AccountCircle, Close } from '@material-ui/icons';
-import CodeIcon from '@material-ui/icons/Code';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import logo from 'asset/images/commerceimage.png';
+import StorageKeys from 'constants/storage-keys';
 import Login from 'features/Auth/components/Login';
+import LoginForm from 'features/Auth/components/LoginForm';
 import Register from 'features/Auth/components/Register';
 import { logout } from 'features/Auth/userSlice';
+import { cartItemsCountSelector } from 'features/Cart/selectors';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
-
-import logo from 'asset/images/commerceimage.png';
-
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import { cartItemsCountSelector } from 'features/Cart/selectors';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import './style.scss';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,9 +27,7 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
-    flexGrow: 1,
-  },
+
   link: {
     color: '#fff',
     textDecoration: 'none',
@@ -52,8 +49,15 @@ const MODE = {
 
 export default function Header() {
   const dispatch = useDispatch();
-  const loggedInUser = useSelector((state) => state.user.current);
-  const isLoggedIn = !!loggedInUser.id;
+
+  // const loggedInUser = useSelector((state) => state.user.current);
+  // const isLoggedIn = !!loggedInUser.id;
+
+  const loggedInUser = localStorage.getItem(StorageKeys.USER);
+  const isLoggedIn = !!JSON.parse(loggedInUser);
+
+  // console.log(isLoggedIn);
+
   const cartItemCount = useSelector(cartItemsCountSelector);
   const history = useHistory();
 
@@ -61,6 +65,9 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(MODE.LOGIN);
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -92,9 +99,9 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar>
           <img src={logo} style={{ margin: '8px' }} height="40px" />
-          <Typography variant="h6" className={classes.title}>
-            <Link className={classes.link} to="/">
-              Ori-shop
+          <Typography className="header__title">
+            <Link className="header__link" to="/">
+              Shopping
             </Link>
           </Typography>
 
@@ -103,9 +110,20 @@ export default function Header() {
               color="inherit"
               onClick={handleClickOpen}
               variant="outlined"
-              style={{ marginTop: '5px' }}
+              className="header__btn"
             >
               Đăng Nhập
+            </Button>
+          )}
+
+          {isLoggedIn && (
+            <Button
+              color="inherit"
+              onClick={handleClickUser}
+              variant="outlined"
+              className="headrt__btn"
+            >
+              <AccountCircle style={{ paddingRight: '3px' }} /> {JSON.parse(loggedInUser).fullName}
             </Button>
           )}
 
@@ -118,17 +136,6 @@ export default function Header() {
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
-
-          {isLoggedIn && (
-            <Button
-              color="inherit"
-              onClick={handleClickUser}
-              style={{ marginTop: '5px' }}
-              variant="outlined"
-            >
-              <AccountCircle style={{ paddingRight: '3px' }} /> {loggedInUser.fullName}
-            </Button>
-          )}
         </Toolbar>
       </AppBar>
       <Dialog
@@ -137,6 +144,7 @@ export default function Header() {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
+        className="dialog"
       >
         <IconButton>
           <Close className={classes.closeBtn} onClick={handleClose}></Close>

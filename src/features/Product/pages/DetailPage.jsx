@@ -7,15 +7,19 @@ import {
   makeStyles,
   Paper,
 } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import { Close } from '@material-ui/icons';
+import StorageKeys from 'constants/storage-keys';
+import Login from 'features/Auth/components/Login';
+import Register from 'features/Auth/components/Register';
 import { addToCart } from 'features/Cart/cartSlice';
 import { useSnackbar } from 'notistack';
-
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router';
-import { useHistory } from 'react-router-dom';
 import AddToCartForm from '../components/AddToCardForm';
-
 import ProductAdditional from '../components/ProductAdditional';
 import ProductDescription from '../components/ProductDescription';
 import ProductInfo from '../components/ProductInfo';
@@ -23,13 +27,6 @@ import ProductMenu from '../components/ProductMenu';
 import ProductReviews from '../components/ProductReviews';
 import ProductThumbnail from '../components/ProductThumbnail';
 import useProductDetail from '../hooks/useProductDetail';
-
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import { AccountCircle, Close } from '@material-ui/icons';
-import Register from 'features/Auth/components/Register';
-import Login from 'features/Auth/components/Login';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,8 +68,10 @@ function DetailPage() {
 
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  const loggedInUser = useSelector((state) => state.user.current);
-  const isLoggedIn = !!loggedInUser.id;
+
+  const loggedInUser = localStorage.getItem(StorageKeys.USER);
+  const isLoggedIn = !!JSON.parse(loggedInUser);
+
   const [mode, setMode] = useState(MODE.LOGIN);
   const [open, setOpen] = useState(false);
 

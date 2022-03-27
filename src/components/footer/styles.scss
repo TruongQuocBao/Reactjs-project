@@ -1,22 +1,42 @@
-.list {
-  list-style-type: none;
-  & > li:hover {
-    cursor: pointer;
-    color: darkblue;
+.footer {
+  margin-top: 30px;
+
+  &__main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 30px;
+
+    padding: 20px 20px 20px 40px;
   }
-}
 
-.socialList {
-  list-style-type: none;
+  &__title {
+    margin-bottom: 10px;
+    font-size: 21px;
+  }
 
-  & > li {
+  &__links {
+    list-style: none;
+  }
+
+  &__item {
+    margin-bottom: 5px;
+    transition: all 0.2s linear;
+
+    &:hover {
+      font-weight: bold;
+      color: darkblue;
+    }
+  }
+
+  &__social {
     display: flex;
-  }
-  & > li:hover {
-    cursor: pointer;
+    gap: 5px;
   }
 
-  & > li > div {
-    margin-right: 5px;
+  @media screen and (max-width: 767px) {
+    padding-bottom: 20px;
+    &__main {
+      grid-template-columns: 1fr;
+    }
   }
 }

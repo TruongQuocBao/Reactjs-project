@@ -11,6 +11,10 @@ import ProductSort from '../components/ProductSort';
 import ProductFilters from '../components/ProductFilters';
 import FilterViewer from '../components/FilterViewer';
 import { useHistory, useLocation } from 'react-router-dom';
+import MenuIcon from '@material-ui/icons/Menu';
+
+import './styles.scss';
+import { Close } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,12 +65,6 @@ function ListPage(props) {
   });
   const [Loading, setLoading] = useState(true);
 
-  // const [filters, setfilters] = useState({
-  //   _page: 1,
-  //   _limit: 9,
-  //   _sort: 'salePrice:ASC',
-  // });
-
   useEffect(() => {
     (async () => {
       try {
@@ -84,11 +82,6 @@ function ListPage(props) {
   }, [queryParams]);
 
   const handlePageChange = (e, page) => {
-    // setfilters((prevFilter) => ({
-    //   ...prevFilter,
-    //   _page: page,
-    // }));
-
     const filters = {
       ...queryParams,
       _page: page,
@@ -101,11 +94,6 @@ function ListPage(props) {
   };
 
   const handleSortChange = (newSortValue) => {
-    // setfilters((prevFilter) => ({
-    //   ...prevFilter,
-    //   _sort: newSortValue,
-    // }));
-
     const filters = {
       ...queryParams,
       _sort: newSortValue,
@@ -118,11 +106,6 @@ function ListPage(props) {
   };
 
   const handleFiltersChange = (newFilters) => {
-    // setfilters((prevFilter) => ({
-    //   ...prevFilter,
-    //   ...newFilters,
-    // }));
-
     const filters = {
       ...queryParams,
       ...newFilters,
@@ -141,23 +124,47 @@ function ListPage(props) {
     });
   };
 
+  const handleClickToggle = () => {
+    const filters = document.querySelector('.listpage__left');
+    const close = document.querySelector('.listpage__close');
+    if (filters) {
+      filters.classList.add('is-active');
+    }
+    if (close) {
+      close.classList.add('is-active');
+    }
+  };
+
+  const handleClickclose = () => {
+    const filters = document.querySelector('.listpage__left');
+    const close = document.querySelector('.listpage__close');
+    filters.classList.remove('is-active');
+    close.classList.remove('is-active');
+  };
   return (
     <Box>
       <Container>
-        <Grid container spacing={1}>
-          <Grid item className={classes.left}>
-            <Paper elevation={0}>
+        <Grid container spacing={1} className="listpage">
+          <Paper elevation={0} className="listpage__toggle">
+            <MenuIcon onClick={handleClickToggle} />
+          </Paper>
+          <div className="listpage__close" onClick={handleClickclose}>
+            <Close />
+          </div>
+
+          <Grid item className="listpage__left">
+            <Paper elevation={0} className="listpage__mobile">
               <ProductFilters filters={queryParams} onChange={handleFiltersChange} />
             </Paper>
           </Grid>
 
-          <Grid item className={classes.right}>
+          <Grid item className="listpage__right">
             <Paper elevation={0}>
               <ProductSort currentSort={queryParams._sort} onChange={handleSortChange} />
               <FilterViewer filters={queryParams} onChange={setNewFilters} />
               {Loading ? <ProductSkeletonList length={9} /> : <ProductList data={productList} />}
 
-              <Box className={classes.pagination}>
+              <Box className="listpage__pagination">
                 <Pagination
                   color="primary"
                   count={Math.ceil(pagination.total / pagination.limit)}

@@ -1,22 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, Container, Grid, Paper, Typography } from '@material-ui/core';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import { makeStyles } from '@material-ui/styles';
-import './styles.scss';
+import { Box, Grid, Paper, Typography } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import YouTubeIcon from '@material-ui/icons/YouTube';
 import InstagramIcon from '@material-ui/icons/Instagram';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+import React from 'react';
+import './styles.scss';
 Footer.propTypes = {};
 
-const footerlist1 = [
+const footerList1 = [
   {
     id: 1,
     title: 'Hot line: 0123456789',
   },
   {
     id: 2,
-    title: 'email hỗ trợ: hotro@orishop.vn',
+    title: 'Email hỗ trợ: hotro@shopping.vn',
   },
   {
     id: 3,
@@ -41,54 +38,57 @@ const footerList2 = [
 
 function Footer(props) {
   return (
-    <Box m={1.5} pt={2.5}>
+    <div className="footer">
       <Paper elevation={0}>
-        <Grid container direction="row" justifyContent="space-around" alignItems="center">
-          <Grid item>
-            <ul className="list">
-              <Typography variant="h6">Hỗ trợ khác hàng</Typography>
-              {footerlist1.map((item) => (
-                <li key={item.id}>{item.title}</li>
+        <div className="footer__main">
+          <div className="footer__col">
+            <h3 className="footer__title"> Hỗ trợ khách hàng</h3>
+            <ul className="footer__links">
+              {footerList1.map((item) => (
+                <li key={item.id} className="footer__item">
+                  {item.title}
+                </li>
               ))}
             </ul>
-          </Grid>
+          </div>
 
-          <Grid item>
-            <ul className="list">
-              <Typography variant="h6">Về Ori-Shop</Typography>
+          <div className="footer__col">
+            <h3 className="footer__title"> Về chúng tôi</h3>
+            <ul className="footer__links">
               {footerList2.map((item) => (
-                <li key={item.id}>{item.title}</li>
+                <li key={item.id} className="footer__item">
+                  {item.title}
+                </li>
               ))}
             </ul>
-          </Grid>
-          {/* <Grid item> phương thức thanh toán</Grid> */}
-          <Grid item>
-            <ul className="socialList">
-              <Typography variant="h6"> Kết nối với chúng tôi</Typography>
-              <li>
+          </div>
+
+          <div className="footer__col">
+            <h3 className="footer__title"> Kết nối với chúng tôi</h3>
+            <ul className="footer__links">
+              <li className="footer__item footer__social">
                 <div>
                   <FacebookIcon />
                 </div>
-                face
+                Facebook
               </li>
-              <li>
+              <li className="footer__item footer__social">
                 <div>
                   <YouTubeIcon />
                 </div>
                 Youtube
               </li>
-              <li>
+              <li className="footer__item footer__social ">
                 <div>
                   <InstagramIcon />
                 </div>
                 Intagram
               </li>
             </ul>
-          </Grid>
-        </Grid>
-        <Typography align="center"> © Copyright by Eward 2022.</Typography>
+          </div>
+        </div>
       </Paper>
-    </Box>
+    </div>
   );
 }
 

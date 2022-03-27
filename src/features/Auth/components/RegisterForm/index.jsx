@@ -89,7 +89,7 @@ function RegisterForm(props) {
       </Avatar>
 
       <Typography className={classes.title} component="h3" variant="h5">
-        Create An Account
+        Đăng ký
       </Typography>
 
       <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -107,7 +107,7 @@ function RegisterForm(props) {
           fullWidth
           size="large"
         >
-          Create an account
+          Đăng ký tài khoản
         </Button>
       </form>
     </div>

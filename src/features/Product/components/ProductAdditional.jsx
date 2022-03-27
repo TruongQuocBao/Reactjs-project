@@ -6,7 +6,7 @@ ProductAdditional.propTypes = {};
 function ProductAdditional(props) {
   return (
     <Paper elevation={0}>
-      <Box textAlign="center" m={1} style={{ padding: '18px', height: '1000px' }}>
+      <Box textAlign="center" style={{ width: '100%', height: '100%', padding: '20px' }}>
         NOT found 😊😊😊
       </Box>
     </Paper>

@@ -6,6 +6,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import Footer from 'components/footer';
 import Cartfeature from 'features/Cart';
 import Notfound from 'components/Notfound';
+import './App.css';
 
 App.propTypes = {};
 
@@ -13,6 +14,7 @@ function App(props) {
   return (
     <div className="App">
       <Header />
+
       <Switch>
         <Redirect from="/products" to="/" exact />
 
@@ -22,6 +24,7 @@ function App(props) {
         <Route component={Notfound}></Route>
       </Switch>
       {/* <ProductFeature /> */}
+
       <Footer />
     </div>
   );

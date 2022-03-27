@@ -79,7 +79,7 @@ function LoginForm(props) {
       </Avatar>
 
       <Typography className={classes.title} component="h3" variant="h5">
-        Sign In
+        Đăng nhập
       </Typography>
 
       <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -95,7 +95,7 @@ function LoginForm(props) {
           fullWidth
           size="large"
         >
-          Sign in
+          Đăng nhập
         </Button>
       </form>
     </div>

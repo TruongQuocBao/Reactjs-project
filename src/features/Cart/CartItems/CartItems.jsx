@@ -31,9 +31,7 @@ const useStyles = makeStyles((theme) => ({
     width: '65px',
   },
 
-  remove: {
-    paddingRight: '50px',
-  },
+  remove: {},
 }));
 
 function CartItems({ item }) {

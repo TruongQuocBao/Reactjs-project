@@ -10,7 +10,11 @@ function ProductReviews(props) {
         <Typography variant="h5">Đánh giá - Nhận xét từ khách hàng</Typography>
       </Box>
 
-      <Box textAlign="center" m={1} style={{ paddingBottom: '18px' }}>
+      <Box
+        textAlign="center"
+        m={1}
+        style={{ paddingBottom: '20px', width: 'auto', height: '100%' }}
+      >
         Chưa có đánh giá nào cho sản phẩm này 😊😊😊
       </Box>
     </Paper>
