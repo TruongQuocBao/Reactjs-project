@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import CartItems from './CartItems/CartItems';
 import { cartItemsCountSelector, cartTotalSelector } from './selectors';
 import { formatPriceCurrency } from 'utils';
+import Footer from 'components/footer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +39,14 @@ const useStyles = makeStyles((theme) => ({
     '&:hover ': {
       opacity: '0.8',
     },
+  },
+
+  footer: {
+    position: 'fixed',
+    bottom: '0',
+    right: '0',
+    left: '0',
+    width: '100%',
   },
 }));
 

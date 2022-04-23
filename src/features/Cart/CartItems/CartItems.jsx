@@ -20,6 +20,7 @@ import { AddCircleOutline, RemoveCircleOutline } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { removeFromCart, setQuantity } from '../cartSlice';
 import { useDispatch } from 'react-redux';
+import Footer from 'components/footer';
 
 CartItems.propTypes = {
   item: PropTypes.object,
@@ -68,34 +69,36 @@ function CartItems({ item }) {
 
   return (
     <>
-      <Grid container direction="row" justifyContent="space-between" alignItems="center">
-        <img src={thumbnailUrl} alt={item.product.name} width="13%" />
+      <Box>
+        <Grid container direction="row" justifyContent="space-between" alignItems="center">
+          <img src={thumbnailUrl} alt={item.product.name} width="13%" />
 
-        <Grid item> {item.product.name}</Grid>
+          <Grid item> {item.product.name}</Grid>
 
-        <Grid item> {formatPriceCurrency(item.product.salePrice)} </Grid>
+          <Grid item> {formatPriceCurrency(item.product.salePrice)} </Grid>
 
-        <Grid item>
-          <IconButton onClick={decreaseQuantity}>
-            <RemoveCircleOutline />
-          </IconButton>
-          <TextField
-            size="small"
-            variant="outlined"
-            value={item.quantity}
-            className={classes.input}
-          />
+          <Grid item>
+            <IconButton onClick={decreaseQuantity}>
+              <RemoveCircleOutline />
+            </IconButton>
+            <TextField
+              size="small"
+              variant="outlined"
+              value={item.quantity}
+              className={classes.input}
+            />
 
-          <IconButton onClick={increaseQuantity}>
-            <AddCircleOutline />
-          </IconButton>
+            <IconButton onClick={increaseQuantity}>
+              <AddCircleOutline />
+            </IconButton>
+          </Grid>
+          <Grid item>
+            <IconButton onClick={removeItem} className={classes.remove}>
+              <DeleteIcon />
+            </IconButton>
+          </Grid>
         </Grid>
-        <Grid item>
-          <IconButton onClick={removeItem} className={classes.remove}>
-            <DeleteIcon />
-          </IconButton>
-        </Grid>
-      </Grid>
+      </Box>
     </>
   );
 }

@@ -4,6 +4,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import ListPage from './pages/ListPage';
 import { Box } from '@material-ui/core';
 import DetailPage from './pages/DetailPage';
+import Footer from 'components/footer';
 
 ProductFeature.propTypes = {};
 

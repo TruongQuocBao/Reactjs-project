@@ -14,18 +14,18 @@ function App(props) {
   return (
     <div className="App">
       <Header />
+      <div style={{ minHeight: '100vh' }}>
+        <Switch>
+          <Redirect from="/products" to="/" exact />
 
-      <Switch>
-        <Redirect from="/products" to="/" exact />
+          <Route path="/cart" component={Cartfeature} exact></Route>
+          <Route path="/" component={ProductFeature}></Route>
 
-        <Route path="/cart" component={Cartfeature} exact></Route>
-        <Route path="/" component={ProductFeature}></Route>
+          <Route component={Notfound}></Route>
+        </Switch>
+      </div>
 
-        <Route component={Notfound}></Route>
-      </Switch>
-      {/* <ProductFeature /> */}
-
-      <Footer />
+      <Footer style={{ position: 'fixed', bottom: '0' }} />
     </div>
   );
 }
