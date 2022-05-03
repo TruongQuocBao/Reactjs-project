@@ -16,6 +16,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import './styles.scss';
 import { Close } from '@material-ui/icons';
 
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../../api/apiFirebase';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     // flexGrow: 1,
@@ -46,33 +49,37 @@ function ListPage(props) {
   const location = useLocation();
   const queryParams = useMemo(() => {
     const params = queryString.parse(location.search);
-
+    // console.log('sdgasdgd', params);
     return {
       ...params,
       _page: Number.parseInt(params._page) || 1,
-      _limit: Number.parseInt(params._limit) || 9,
+      _limit: Number.parseInt(params._limit) || 2,
       _sort: params._sort || 'salePrice:ASC',
       isPromotion: params.isPromotion === 'true',
       isFreeShip: params.isFreeShip === 'true',
+      startAfter: params === '1' ? null : params.startAfter,
     };
   }, [location.search]);
 
   const [productList, setProductList] = useState([]);
   const [pagination, setpagination] = useState({
-    limit: 9,
-    total: 10,
+    limit: 2,
+    total: 0,
     page: 1,
+    startAfter: null,
   });
   const [Loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       try {
-        const { data, pagination } = await productApi.getAll(queryParams);
+        const { data, pagination: pa } = await productApi.getAll(
+          queryParams,
+          pagination.startAfter
+        );
 
-        setProductList(data.data);
-        setpagination(pagination);
-        console.log({ data, pagination });
+        setProductList(data);
+        setpagination(pa);
       } catch (error) {
         console.log('failed to fetch product list', error);
       }
@@ -82,10 +89,20 @@ function ListPage(props) {
   }, [queryParams]);
 
   const handlePageChange = (e, page) => {
-    const filters = {
-      ...queryParams,
-      _page: page,
-    };
+    let filters;
+    if (page === 1) {
+      delete queryParams.startAfter;
+      filters = {
+        ...queryParams,
+        _page: page,
+      };
+    } else {
+      filters = {
+        ...queryParams,
+        _page: page,
+        startAfter: pagination.startAfter,
+      };
+    }
 
     history.push({
       pathname: history.location.pathname,
@@ -106,9 +123,11 @@ function ListPage(props) {
   };
 
   const handleFiltersChange = (newFilters) => {
+    delete queryParams.startAfter;
     const filters = {
       ...queryParams,
       ...newFilters,
+      _page: 1,
     };
 
     history.push({

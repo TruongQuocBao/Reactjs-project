@@ -7,26 +7,31 @@ import StorageKeys from 'constants/storage-keys';
 export const register = createAsyncThunk('user/register', async (payload) => {
   const data = await userApi.register(payload);
 
-  localStorage.setItem(StorageKeys.TOKEN, data.data.jwt);
-  localStorage.setItem(StorageKeys.USER, JSON.stringify(data.data.user));
+  localStorage.setItem(StorageKeys.TOKEN, data.accessToken);
+  localStorage.setItem(StorageKeys.USER, JSON.stringify(data.fullname));
 
-  return data.data.user;
+  return data;
 });
 
 export const login = createAsyncThunk('user/login', async (payload) => {
   const data = await userApi.login(payload);
-  // console.log(data);
 
-  localStorage.setItem(StorageKeys.TOKEN, data.data.jwt);
-  localStorage.setItem(StorageKeys.USER, JSON.stringify(data.data.user));
-  return data.data.user;
+  // localStorage.setItem(StorageKeys.TOKEN, data.data.jwt);
+  // localStorage.setItem(StorageKeys.USER, JSON.stringify(data.data.user));
+
+  localStorage.setItem(StorageKeys.TOKEN, data.accessToken);
+  localStorage.setItem(StorageKeys.USER, JSON.stringify(data.fullname));
+
+  console.log(data);
+
+  return data;
 });
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    // current: JSON.parse(localStorage.getItem(StorageKeys.USER)) || {},
-    current: {},
+    current: JSON.parse(localStorage.getItem(StorageKeys.USER)) || {},
+    // current: {},
 
     setting: {},
   },

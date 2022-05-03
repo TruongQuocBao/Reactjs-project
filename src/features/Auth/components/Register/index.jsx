@@ -17,11 +17,12 @@ function Register(props) {
   const handleSubmit = async (values) => {
     try {
       //auto set username = useremail
-      values.username = values.email;
+      // values.username = values.email;
 
       const action = register(values);
       const resultAction = await dispatch(action);
       unwrapResult(resultAction);
+      console.log(unwrapResult(resultAction));
 
       // close dialog
       const { closeDialog } = props;

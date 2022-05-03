@@ -123,7 +123,7 @@ export default function Header() {
               variant="outlined"
               className="headrt__btn"
             >
-              <AccountCircle style={{ paddingRight: '3px' }} /> {JSON.parse(loggedInUser).fullName}
+              <AccountCircle style={{ paddingRight: '3px' }} /> {JSON.parse(loggedInUser).fullname}
             </Button>
           )}
 

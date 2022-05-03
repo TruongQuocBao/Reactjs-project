@@ -16,10 +16,11 @@ function Login(props) {
 
   const handleSubmit = async (values) => {
     try {
+      console.log(values);
       const action = login(values);
       const resultAction = await dispatch(action);
       unwrapResult(resultAction);
-
+      console.log(unwrapResult(resultAction));
       // close dialog
       const { closeDialog } = props;
       if (closeDialog) {

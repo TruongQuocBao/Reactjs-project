@@ -10,7 +10,7 @@ export default function useProductDetail(productId) {
       try {
         const result = await productApi.get(productId);
         setProduct(result.data);
-        console.log(result.data);
+        console.log(result);
       } catch (error) {
         console.log('Failed to fetch product', error);
       }

@@ -25,7 +25,7 @@ function App(props) {
         </Switch>
       </div>
 
-      <Footer style={{ position: 'fixed', bottom: '0' }} />
+      <Footer  />
     </div>
   );
 }

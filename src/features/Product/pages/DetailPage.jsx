@@ -62,7 +62,7 @@ function DetailPage() {
     params: { productId },
     url,
   } = useRouteMatch();
-  console.log(url);
+  // console.log(productId);
 
   const { product, loading } = useProductDetail(productId);
 
@@ -97,6 +97,7 @@ function DetailPage() {
       product,
       quantity,
     });
+    console.log(product);
     dispatch(action);
     enqueueSnackbar('Thêm vào giỏ hàng thành công !!!🎉', { variant: 'success' });
   };
